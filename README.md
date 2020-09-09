@@ -1,6 +1,6 @@
 # Shutdown Ec2 instances using AWS Lambda and python code
 
-This python "Lambda_function.py code will shurdown running or pending ec2 instances in a region. 
+This python "Lambda_function.py code will shutdown running or pending ec2 instances in a region. 
 
 ## AWS python library boto3
 
