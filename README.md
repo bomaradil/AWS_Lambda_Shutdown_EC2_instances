@@ -1,48 +1,36 @@
 # Shutdown Ec2 instances using AWS Lambda and python code
 
-This python code will shurdown running or pending ec2 instances in that region. 
+This python "Lambda_function.py code will shurdown running or pending ec2 instances in a region. 
 
-## import the aws library boto3
+## AWS python library boto3
 
-import boto3
+the AWS SDK for Python (Boto3) will help call upon the aws services in your code and retrieve information or launch action. 
 
-## fonction to get ec2 instances that are in state Running or pending 
+## the code
 
-thsi fucntion will return a list with all the runnign instances id.
+this code is devided in to tree python function.
 
-def Get_Running_Instances():  
-    ec2 = boto3.resource('ec2') 
-    ### call the features resource from the boto3 library
-    instances = ec2.instances.filter(Filters=[{'Name': 'instance-state-name', 'Values': ['pending', 'running',]},])
-    ###filter the instances returned using the state name. you can also filter using Tags by adding the filters:
-    ```
-    [{'Name': 'tag-key', 'Values': ['Role','Name',]}, {'Name': 'tag-value', 'Values': ['*test*', '*TEST*',]},]
-    ```
-    ###return a liste with the ids of the instances
-    return [instance.id for instance in instances]
-    
-    
-def Stop_Instances(ids=Get_Running_Instances()):
-    """
-    shutdown the Ec2 instances that has been returned by the fonction Get_Running_Instances
-    """
-    ec2 = boto3.client('ec2')
-    #call the features client from the boto3 library
-    if not ids:
-        #if the list of Ec2 instances returned is empty.
-        print("No Instance in the state Running or pending")
-    else:
-        ec2.stop_instances(InstanceIds=ids)
-        #stop the instances using their id
-        ec2.get_waiter('instance_stopped').wait(InstanceIds=ids)
-        #wait for the state of the instances to change to stopped.
-        print('instance {} was shutdown'.format(ids))
+1 - Get_Running_Instances.
+  - 
+  This function will get the ec2 instances that are in the state Running or pending.
+  You can change the filters like explained in the comment to retrive the instances with a specific tag.
+  [{'Name': 'tag-key', 'Values': ['Role','Name',]}, {'Name': 'tag-value', 'Values': ['*test*', '*TEST*',]},]
+  the filters can be combined or used separately. 
+  The function will return a list with all the running instances ids.
 
-def lambda_handler(event, context):
-    """
-    launch the fonction Stop_Instances() in the lambda function 
-    Handler for the Lambda function "lambda_function.lambda_handler"
-    Timeout need to be more than 1min, so that our function can run perfectly 
-    if you have an important number of instances to be shutdown, change the parameter of timeout
-    """
-    Stop_Instances()
+2 - Get_Running_Instances.
+  -
+  This function will shutdown the instances returned from the first function 
+  and wait till the state of the instances change to shutdown before return an OK message.
+  If the list returned is empty the function will do nothing.
+  If your objectif is not to shutdown the instance but to terminated them or to start them, 
+  you can change the stop_instances(InstanceIds=ids) with start_instance(InstanceIds=ids) to start the instances 
+  or terminate_instances(InstanceIds=ids) to terminate them.
+  Don’t forget to change the get_waiter methodes to check the new status ('instance_started', 'instance terminated').
+      
+3 - the lambda_handler.
+  -
+  launch the fonction Stop_Instances() in the lambda function.
+  The Handler parameter for the Lambda function need to be "lambda_function.lambda_handler".
+  Timeout need to be more than 1 min, so that our function can run properly 
+  if you have an important number of instances to be shutdown, add more time to the Timeout parameter 
