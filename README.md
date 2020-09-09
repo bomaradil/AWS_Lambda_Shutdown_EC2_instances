@@ -34,3 +34,11 @@ this code is devided in to tree python function.
   The Handler parameter for the Lambda function need to be "lambda_function.lambda_handler".
   Timeout need to be more than 1 min, so that our function can run properly 
   if you have an important number of instances to be shutdown, add more time to the Timeout parameter 
+  
+  Please give me your feed back.
+  You can join me at my email adresses b.omaradil@gmail.com
+  Thank you
+  
+  ##License
+  MIT
+  
