@@ -1,22 +1,26 @@
 # Shutdown Ec2 instances using AWS Lambda and python code
+
 This python code will shurdown running or pending ec2 instances in that region 
 
-#import the aws library boto3
+## import the aws library boto3
+
 import boto3
 
-def Get_Running_Instances():
-    """
-    fonction to get ec2 instances that are in state Running or pending
-    and return a list with all the instances id
-    """
+## a fonction to get ec2 instances that are in state Running or pending 
+
+thsi fucntion will return a list with all the runnign instances id
+
+def Get_Running_Instances():  
     ec2 = boto3.resource('ec2') 
-    #call the features resource from the boto3 library
+    ### call the features resource from the boto3 library
     instances = ec2.instances.filter(Filters=[{'Name': 'instance-state-name', 'Values': ['pending', 'running',]},])
-    #filter the instances returned using the state name
-    #you can also filter using Tags by adding the filters: 
-    #[{'Name': 'tag-key', 'Values': ['Role','Name',]}, {'Name': 'tag-value', 'Values': ['*test*', '*TEST*',]},]
+    ###filter the instances returned using the state name. you can also filter using Tags by adding the filters:
+    ```
+    [{'Name': 'tag-key', 'Values': ['Role','Name',]}, {'Name': 'tag-value', 'Values': ['*test*', '*TEST*',]},]
+    ```
+    ###return a liste with the ids of the instances
     return [instance.id for instance in instances]
-    #return a liste with the ids of the instances
+    
     
 def Stop_Instances(ids=Get_Running_Instances()):
     """
