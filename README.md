@@ -30,9 +30,9 @@ this code is devided in to tree python function.
       
 3 - the lambda_handler.
   -
-  launch the fonction Stop_Instances() in the lambda function.
+  launch the function Stop_Instances() in the lambda function.
   The Handler parameter for the Lambda function need to be "lambda_function.lambda_handler".
-  Timeout need to be more than 1 min, so that our function can run properly 
+  Timeout need to be more than 1 minute, so that our function can run properly 
   if you have an important number of instances to be shutdown, add more time to the Timeout parameter 
   
   Please give me your feed back.
