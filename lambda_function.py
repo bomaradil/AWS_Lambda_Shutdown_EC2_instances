@@ -6,7 +6,7 @@ import boto3
 
 def Get_Running_Instances():
     """
-    fonction to get ec2 instances that are in state Running or pending
+    function to get ec2 instances that are in state Running or pending
     and return a list with all the instances id
     """
     ec2 = boto3.resource('ec2') 
@@ -20,7 +20,7 @@ def Get_Running_Instances():
     
 def Stop_Instances(ids=Get_Running_Instances()):
     """
-    shutdown the Ec2 instances that has been returned by the fonction Get_Running_Instances
+    shutdown the Ec2 instances that has been returned by the function Get_Running_Instances
     """
     ec2 = boto3.client('ec2')
     #call the features client from the boto3 library
@@ -36,9 +36,9 @@ def Stop_Instances(ids=Get_Running_Instances()):
 
 def lambda_handler(event, context):
     """
-    launch the fonction Stop_Instances() in the lambda function 
+    launch the function Stop_Instances() in the lambda function 
     Handler for the Lambda function "lambda_function.lambda_handler"
-    Timeout need to be more than 1min, so that our function can run perfectly 
+    Timeout need to be more than 1 minute, so that our function can run perfectly 
     if you have an important number of instances to be shutdown, change the parameter of timeout
     """
     Stop_Instances()
