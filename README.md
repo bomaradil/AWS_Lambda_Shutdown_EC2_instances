@@ -8,7 +8,6 @@ the AWS SDK for Python (Boto3) will help call upon the aws services in your code
 
 ## the code
 
-this code is devided in to tree python function.
 
 1 - Get_Running_Instances.
   - 
